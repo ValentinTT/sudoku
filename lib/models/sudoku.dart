@@ -9,9 +9,9 @@ class Sudoku with ChangeNotifier {
 
   Sudoku() {
     initialBoard = [
-      [4, 2, 7, 1, 3, 9, 0, 6, 8], //3 9
-      [0, 0, 5, 8, 7, 6, 3, 0, 0], //8 7
-      [6, 0, 3, 5, 4, 2, 1, 0, 0], //5 4 2
+      [4, 2, 7, 1, 0, 0, 0, 6, 8],
+      [0, 0, 5, 0, 0, 6, 3, 0, 0],
+      [6, 0, 3, 0, 0, 0, 1, 0, 0],
       [2, 0, 0, 0, 1, 0, 4, 0, 0],
       [3, 4, 0, 0, 6, 7, 0, 5, 1],
       [8, 0, 1, 0, 5, 0, 0, 2, 0],
@@ -45,10 +45,9 @@ class Sudoku with ChangeNotifier {
 
   void restartStatus() {
     _isSolved = true;
-    for(int row = 0; row < currentBoard.length; row++) {
-      for(int col = 0; col < currentBoard[row].length; col++) {
-        if (currentBoard[row][col] != solvedBoard[row][col])
-          _isSolved = false;
+    for (int row = 0; row < currentBoard.length; row++) {
+      for (int col = 0; col < currentBoard[row].length; col++) {
+        if (currentBoard[row][col] != solvedBoard[row][col]) _isSolved = false;
         statusBoard[row][col] = true;
       }
     }
@@ -58,6 +57,7 @@ class Sudoku with ChangeNotifier {
     _isSolved = newValue;
     notifyListeners();
   }
+
   get isSolved => _isSolved;
 
   void restart() {
@@ -76,19 +76,19 @@ class Sudoku with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<bool> solveVisual(int prevRow) async{
+  Future<bool> solveVisual(int prevRow) async {
     for (int row = prevRow; row < currentBoard.length; row++) {
       for (int col = 0; col < currentBoard[row].length; col++) {
         if (currentBoard[row][col] != 0) continue;
-        while (await solveCellVisual(row, col)) if (await solveVisual(row))
-          return true;
+        while (await solveCellVisual(row, col))
+          if (await solveVisual(row)) return true;
         return false;
       }
     }
     return true;
   }
 
-  Future<bool> solveCellVisual(int row, int col) async{
+  Future<bool> solveCellVisual(int row, int col) async {
     await Future.delayed(Duration(milliseconds: 10));
     for (int number = currentBoard[row][col] + 1; number <= 9; number++) {
       if (!isInRow(row, number, currentBoard) &&

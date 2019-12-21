@@ -46,6 +46,7 @@ class _ControlsState extends State<Controls> {
                 sudoku.restart();
                 sudoku.solveVisual(0).then((v) {
                   sudoku.isSolved = true;
+                  currentCell.updatesEnabled = true;
                 });
               }),
               SpecialControl(icon: Icons.check, onPress: sudoku.check),
