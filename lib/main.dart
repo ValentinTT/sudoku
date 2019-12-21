@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:sudoku/screens/game/game.dart';
+import 'package:sudoku/screens/home.dart';
 
 void main() => runApp(MaterialApp(
-    title: "Sudoku app", 
-    home: Game()
+    title: "Sudoku",
+    home: Home()
   )
 );
