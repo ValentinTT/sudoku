@@ -27,6 +27,14 @@ class CurrentCell with ChangeNotifier {
 
   get currentControl => _currentControl;
 
+  void restart() {
+    _row = 0;
+    _col = 0;
+    _updatesEnabled = true;
+    _currentControl = "0";
+    notifyListeners();
+  }
+
   void setPosition(int row, int col) {
     if(!_updatesEnabled) return;
     if(row > 8 || row < 0) return;

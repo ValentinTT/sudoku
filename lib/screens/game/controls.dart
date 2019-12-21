@@ -13,7 +13,7 @@ class _ControlsState extends State<Controls> {
   @override
   Widget build(BuildContext context) {
     Sudoku sudoku = Provider.of<Sudoku>(context, listen: false);
-    CurrentCell currentCell = Provider.of<CurrentCell>(context);
+    CurrentCell currentCell = Provider.of<CurrentCell>(context, listen: false);
     List<String> controls = currentCell.controls;
 
     return Container(
@@ -42,13 +42,10 @@ class _ControlsState extends State<Controls> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               SpecialControl(icon: Icons.edit, onPress: () {
-                currentCell.setPosition(0, 0);
                 currentCell.updatesEnabled = false;
                 sudoku.restart();
                 sudoku.solveVisual(0).then((v) {
                   sudoku.isSolved = true;
-                  print("Updated");
-                  currentCell.updatesEnabled = true;
                 });
               }),
               SpecialControl(icon: Icons.check, onPress: sudoku.check),
@@ -108,6 +105,7 @@ class Control extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(2.0),
         child: FloatingActionButton(
+          heroTag: text,
           onPressed: () {
             currentCell.currentControl = text;
             sudoku.update(currentCell.row, currentCell.col, _value);
