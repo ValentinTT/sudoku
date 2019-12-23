@@ -9,6 +9,7 @@ Sudoku is a simple sudoku game developed with Flutter. The object of this projec
 * Animations to show the selected board cell
 
 ## Images
-![home screen screenshot](home_screen.png)
-![game solved screenshot](solved.png)
-![error checking screenshot](error.png)
+
+<img src="home_screen.png" alt="home screen screenshot" width="500">
+<img src="solved.png" alt="game solved screenshot" width="500">
+<img src="error.png" alt="error checking " width="500">
