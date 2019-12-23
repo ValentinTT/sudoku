@@ -67,13 +67,19 @@ class Sudoku with ChangeNotifier {
     notifyListeners();
   }
 
-  void check() {
-    for (int row = 0; row < currentBoard.length; row++)
-      for (int col = 0; col < currentBoard[0].length; col++)
+  bool check() {
+    bool isOk = true;
+
+    for (int row = 0; row < currentBoard.length; row++) {
+      for (int col = 0; col < currentBoard[0].length; col++) {
         statusBoard[row][col] =
             currentBoard[row][col] == solvedBoard[row][col] ||
                 currentBoard[row][col] == 0;
+        if (!statusBoard[row][col]) isOk = false;
+      }
+    }
     notifyListeners();
+    return isOk;
   }
 
   Future<bool> solveVisual(int prevRow) async {

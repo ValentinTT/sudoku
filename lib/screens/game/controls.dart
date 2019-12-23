@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:sudoku/models/currentCell.dart';
 import 'package:sudoku/models/sudoku.dart';
 import 'package:sudoku/theme.dart';
+import 'package:toast/toast.dart';
 
 class Controls extends StatefulWidget {
   @override
@@ -41,19 +42,31 @@ class _ControlsState extends State<Controls> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              SpecialControl(icon: Icons.edit, onPress: () {
-                currentCell.updatesEnabled = false;
-                sudoku.restart();
-                sudoku.solveVisual(0).then((v) {
-                  sudoku.isSolved = true;
-                  currentCell.updatesEnabled = true;
-                });
-              }),
-              SpecialControl(icon: Icons.check, onPress: sudoku.check),
-              SpecialControl(icon: Icons.settings_backup_restore, onPress: () {
-                currentCell.updatesEnabled = true;
-                sudoku.restart();
-              }),
+              SpecialControl(
+                  icon: Icons.edit,
+                  onPress: () {
+                    currentCell.updatesEnabled = false;
+                    sudoku.restart();
+                    sudoku.solveVisual(0).then((v) {
+                      sudoku.isSolved = true;
+                      currentCell.updatesEnabled = true;
+                    });
+                  }),
+              SpecialControl(
+                  icon: Icons.check,
+                  onPress: () {
+                    if (sudoku.check())
+                      Toast.show("It's everything ok", context,
+                          backgroundColor: MyTheme.appBar,
+                          textColor: MyTheme.controlText,
+                          gravity: Toast.CENTER);
+                  }),
+              SpecialControl(
+                  icon: Icons.settings_backup_restore,
+                  onPress: () {
+                    currentCell.updatesEnabled = true;
+                    sudoku.restart();
+                  }),
             ],
           )
         ],
